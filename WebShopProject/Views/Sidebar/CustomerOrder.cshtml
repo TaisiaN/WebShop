@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "CustomerOrder";
+}
+
+<h4 class="my-2 text-info"> Customer's Orders</h4>
+<table id="dataTable" class="table table-bordered  table-striped">  
+    <thead >  
+    <tr>  
+        <th>Customer Name</th>  
+        <th>Street</th>  
+        <th>Phone</th>  
+        <th>Email</th>  
+        <th>Order Date</th>  
+        <th>Product Name</th>  
+        <th>Unite Price</th>  
+        <th>Quantity</th>  
+    </tr>  
+    </thead>  
+</table>  
+
+
+@section scripts
+{
+
+
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: '@Url.Action("GetOrders")',
+                type: "GET",
+                dataType: "json",
+                data: {},
+                success: function(data) {
+                    $.each(data,
+                        function(x, item) {
+                            var rows = "<tr><td>" +
+                                item.CustomerName +
+                                "</td><td>" +
+                                item.Street +
+                                "</td><td>" +
+                                item.Phone +
+                                "</td><td>" +
+                                item.Email +
+                                "</td><td>" +
+                                item.OrderDate +
+                                "</td><td>" +
+                                item.ProductName +
+                                "</td><td>" +
+                                item.UnitPrice +
+                                "</td><td>" +
+                                item.Quantity +
+                                "</td></tr>";
+                            $('#dataTable').append(rows);
+
+                        });
+                },
+                error: function() {
+                    alert("Error with DB");
+                }
+            });
+        });
+    </script>
+
+}
+
